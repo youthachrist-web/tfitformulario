@@ -1,974 +1,789 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>THYMOS — Formulário Estratégico Operacional</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<!-- ========================= -->
+<!-- THYMOS PREMIUM UPGRADE -->
+<!-- COLE TUDO ISSO NO SEU PROJETO -->
+<!-- ========================= -->
 
-    :root {
-      --bg:       #080808;
-      --bg2:      #0f0f0f;
-      --bg3:      #161616;
-      --border:   #222;
-      --gold:     #c9a84c;
-      --gold2:    #e8c97a;
-      --text:     #f0f0f0;
-      --muted:    #888;
-      --faint:    #3a3a3a;
-      --radius:   6px;
-      --sans:     'Inter', sans-serif;
-      --serif:    'Playfair Display', serif;
-    }
+<!-- META SECURITY -->
+<meta http-equiv="Content-Security-Policy"
+content="default-src 'self' https:;">
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 3px; }
-
-    /* ── NAV ─────────────────────────────────────────── */
-    #nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(8,8,8,.92);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-    }
-    #nav-inner {
-      max-width: 1020px; margin: 0 auto; padding: 0 24px;
-      height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    }
-    #logo {
-      font-family: var(--serif); font-size: 20px; color: var(--gold);
-      letter-spacing: 3px; font-weight: 700; flex-shrink: 0;
-    }
-    #nav-pills {
-      display: flex; gap: 4px; overflow-x: auto;
-      scrollbar-width: none; -ms-overflow-style: none;
-    }
-    #nav-pills::-webkit-scrollbar { display: none; }
-    .pill {
-      padding: 5px 12px; border-radius: 99px; font-size: 12px; font-weight: 500;
-      white-space: nowrap; cursor: pointer; border: none;
-      background: transparent; color: var(--muted); transition: all .2s;
-    }
-    .pill:hover { color: var(--text); background: rgba(255,255,255,.06); }
-    .pill.active { background: var(--gold); color: #111; font-weight: 600; }
-    #progress-bar {
-      height: 2px; background: var(--border);
-    }
-    #progress-fill {
-      height: 100%; background: var(--gold);
-      transition: width .35s cubic-bezier(.4,0,.2,1);
-      width: 11.11%;
-    }
-
-    /* ── MAIN ────────────────────────────────────────── */
-    main { max-width: 800px; margin: 0 auto; padding: 100px 24px 120px; }
-
-    /* ── HERO ────────────────────────────────────────── */
-    .hero { margin-bottom: 80px; }
-    .hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(36px, 6vw, 64px);
-      line-height: 1.1; margin-bottom: 20px; font-weight: 800;
-    }
-    .hero h1 em { color: var(--gold); font-style: italic; }
-    .hero p { color: var(--muted); font-size: 17px; max-width: 560px; line-height: 1.7; }
-
-    /* ── SECTION ─────────────────────────────────────── */
-    .form-section { scroll-margin-top: 80px; margin-bottom: 80px; }
-    .section-head { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 36px; }
-    .section-num { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
-    .section-title { font-family: var(--serif); font-size: 28px; font-weight: 700; }
-
-    /* ── FIELD GROUP ─────────────────────────────────── */
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    @media(max-width:640px) { .grid2 { grid-template-columns: 1fr; } }
-    .field-group { display: flex; flex-direction: column; gap: 24px; }
-    .field { display: flex; flex-direction: column; gap: 8px; }
-    label { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .4px; text-transform: uppercase; }
-
-    input[type=text], input[type=email], input[type=password], input[type=url],
-    textarea, select {
-      background: var(--bg2); border: 1px solid var(--border);
-      color: var(--text); border-radius: var(--radius);
-      padding: 11px 14px; font-size: 14px; font-family: var(--sans);
-      outline: none; width: 100%; transition: border-color .2s;
-      appearance: none; -webkit-appearance: none;
-    }
-    input[type=text]:focus, input[type=email]:focus, input[type=password]:focus,
-    textarea:focus, select:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201,168,76,.12);
-    }
-    textarea { resize: vertical; min-height: 110px; }
-    input::placeholder, textarea::placeholder { color: var(--faint); }
-
-    /* ── CHECKBOX / RADIO ────────────────────────────── */
-    .check-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
-    .radio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
-    .check-item, .radio-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 14px; border: 1px solid var(--border);
-      border-radius: var(--radius); cursor: pointer;
-      font-size: 13px; font-weight: 500; color: var(--text);
-      transition: all .15s; background: var(--bg2); user-select: none;
-    }
-    .check-item:hover, .radio-item:hover { border-color: var(--gold); background: rgba(201,168,76,.05); }
-    .check-item input, .radio-item input { display: none; }
-    .check-item .mark, .radio-item .mark {
-      width: 16px; height: 16px; border: 1.5px solid var(--faint);
-      border-radius: 3px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      transition: all .15s;
-    }
-    .radio-item .mark { border-radius: 50%; }
-    .check-item input:checked ~ .mark,
-    .radio-item input:checked ~ .mark {
-      background: var(--gold); border-color: var(--gold);
-    }
-    .check-item input:checked ~ .mark::after {
-      content: ''; display: block; width: 9px; height: 5px;
-      border-left: 2px solid #111; border-bottom: 2px solid #111;
-      transform: rotate(-45deg) translateY(-1px);
-    }
-    .radio-item input:checked ~ .mark::after {
-      content: ''; display: block; width: 7px; height: 7px;
-      background: #111; border-radius: 50%;
-    }
-    .check-item.selected, .radio-item.selected {
-      border-color: var(--gold); background: rgba(201,168,76,.08);
-    }
-
-    /* ── CARD BOX ────────────────────────────────────── */
-    .card-box {
-      background: rgba(255,255,255,.02); border: 1px solid var(--border);
-      border-radius: 10px; padding: 28px; margin: 24px 0;
-    }
-    .card-box-title { font-family: var(--serif); font-size: 17px; font-weight: 700; margin-bottom: 20px; }
-
-    /* ── CONDITIONAL ─────────────────────────────────── */
-    .conditional { overflow: hidden; max-height: 0; opacity: 0; transition: max-height .35s ease, opacity .25s ease; }
-    .conditional.open { max-height: 600px; opacity: 1; }
-
-    /* ── FILE UPLOAD ─────────────────────────────────── */
-    #drop-zone {
-      border: 2px dashed var(--border); border-radius: 10px;
-      padding: 48px 24px; text-align: center; cursor: pointer;
-      transition: border-color .2s, background .2s;
-    }
-    #drop-zone:hover, #drop-zone.drag-over {
-      border-color: var(--gold); background: rgba(201,168,76,.04);
-    }
-    #drop-zone svg { opacity: .4; transition: opacity .2s; }
-    #drop-zone:hover svg, #drop-zone.drag-over svg { opacity: .9; }
-    #drop-zone p { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
-    #drop-zone small { color: var(--faint); font-size: 12px; }
-    #file-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
-    @media(max-width:500px) { #file-list { grid-template-columns: 1fr; } }
-    .file-item {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 10px 12px;
-    }
-    .file-thumb {
-      width: 36px; height: 36px; border-radius: 4px; flex-shrink: 0;
-      background: var(--bg3); display: flex; align-items: center; justify-content: center; overflow: hidden;
-    }
-    .file-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .file-info { flex: 1; min-width: 0; }
-    .file-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .file-size { font-size: 11px; color: var(--muted); }
-    .file-remove {
-      background: none; border: none; color: var(--muted); cursor: pointer; padding: 4px;
-      border-radius: 4px; display: flex; transition: color .15s;
-    }
-    .file-remove:hover { color: #e55; }
-
-    /* ── SUBMIT ──────────────────────────────────────── */
-    #submit-btn {
-      width: 100%; padding: 16px; margin-top: 48px;
-      background: var(--gold); color: #111; border: none;
-      border-radius: var(--radius); font-size: 15px; font-weight: 700;
-      letter-spacing: .5px; cursor: pointer; font-family: var(--sans);
-      transition: background .2s, transform .1s; text-transform: uppercase;
-    }
-    #submit-btn:hover { background: var(--gold2); }
-    #submit-btn:active { transform: scale(.99); }
-    #submit-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-
-    /* ── ERROR MSG ───────────────────────────────────── */
-    #error-msg {
-      display: none; margin-top: 16px;
-      background: rgba(220,50,50,.1); border: 1px solid rgba(220,50,50,.3);
-      border-radius: var(--radius); padding: 14px 18px;
-      color: #e88; font-size: 14px;
-    }
-
-    /* ── SUCCESS ─────────────────────────────────────── */
-    #success-screen {
-      display: none; min-height: 100vh;
-      align-items: center; justify-content: center;
-      flex-direction: column; text-align: center; padding: 40px;
-    }
-    #success-screen.show { display: flex; }
-    .success-icon {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: rgba(201,168,76,.15); border: 1px solid rgba(201,168,76,.4);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 28px;
-    }
-    #success-screen h2 { font-family: var(--serif); font-size: 34px; margin-bottom: 14px; }
-    #success-screen p { color: var(--muted); font-size: 17px; max-width: 420px; line-height: 1.7; margin-bottom: 36px; }
-    .btn-ghost {
-      padding: 13px 32px; border: 1px solid var(--border); border-radius: var(--radius);
-      color: var(--text); background: none; font-size: 14px; cursor: pointer;
-      font-family: var(--sans); font-weight: 500; transition: border-color .2s, background .2s;
-    }
-    .btn-ghost:hover { border-color: var(--gold); background: rgba(201,168,76,.06); }
-
-    /* ── SPINNER ─────────────────────────────────────── */
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .spinner {
-      display: inline-block; width: 18px; height: 18px;
-      border: 2px solid rgba(17,17,17,.3); border-top-color: #111;
-      border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle;
-      margin-right: 8px;
-    }
-  </style>
-</head>
-<body>
-
-<!-- NAV -->
-<div id="nav">
-  <div id="nav-inner">
-    <div id="logo">THYMOS</div>
-    <div id="nav-pills">
-      <button class="pill active" onclick="scrollTo(0)">1. Identidade</button>
-      <button class="pill" onclick="scrollTo(1)">2. Logística</button>
-      <button class="pill" onclick="scrollTo(2)">3. Produtos</button>
-      <button class="pill" onclick="scrollTo(3)">4. Website</button>
-      <button class="pill" onclick="scrollTo(4)">5. Pagamentos</button>
-      <button class="pill" onclick="scrollTo(5)">6. Administração</button>
-      <button class="pill" onclick="scrollTo(6)">7. Marketing</button>
-      <button class="pill" onclick="scrollTo(7)">8. Documentos</button>
-      <button class="pill" onclick="scrollTo(8)">9. Final</button>
-    </div>
-  </div>
-  <div id="progress-bar"><div id="progress-fill"></div></div>
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">THYMOS</div>
 </div>
 
-<!-- FORM PAGE -->
-<div id="form-page">
-  <main>
+<!-- ANTI SPAM -->
+<input type="checkbox" name="botcheck" class="hidden" style="display:none;">
 
-    <!-- HERO -->
-    <div class="hero">
-      <h1>Estratégia<br><em>Operacional</em></h1>
-      <p>Bem-vindo ao onboarding estratégico da THYMOS. Este documento define os pilares fundamentais, operacionais e estéticos da sua marca no digital.</p>
-    </div>
+<!-- AUTO SAVE -->
+<script>
+const allFields = document.querySelectorAll('input, textarea, select');
 
-    <form id="main-form" enctype="multipart/form-data">
+allFields.forEach(field => {
 
-      <!-- ── 1. IDENTIDADE ── -->
-      <section class="form-section" id="sec-0">
-        <div class="section-head">
-          <div class="section-num">01</div>
-          <div class="section-title">Identidade da Marca</div>
-        </div>
-        <div class="field-group">
-          <div class="grid2">
-            <div class="field">
-              <label for="brandName">Nome oficial da marca *</label>
-              <input type="text" id="brandName" name="brandName" placeholder="Ex: THYMOS" required />
-            </div>
-            <div class="field">
-              <label for="slogan">Slogan</label>
-              <input type="text" id="slogan" name="slogan" placeholder="Ex: Domine seu instinto" />
-            </div>
-          </div>
-          <div class="field">
-            <label for="brandMeaning">Significado da marca</label>
-            <textarea id="brandMeaning" name="brandMeaning" placeholder="Qual a história por trás do nome?"></textarea>
-          </div>
-          <div class="grid2">
-            <div class="field">
-              <label for="mission">Missão da marca</label>
-              <textarea id="mission" name="mission" placeholder="O propósito central da empresa"></textarea>
-            </div>
-            <div class="field">
-              <label for="vision">Visão da marca</label>
-              <textarea id="vision" name="vision" placeholder="Onde a marca quer chegar?"></textarea>
-            </div>
-          </div>
-          <div class="field">
-            <label for="values">Valores principais</label>
-            <textarea id="values" name="values" placeholder="Os princípios que guiam a marca"></textarea>
-          </div>
+  field.addEventListener('input', () => {
 
-          <div class="card-box">
-            <div class="card-box-title">Público-Alvo</div>
-            <div class="field-group">
-              <div class="field">
-                <label for="targetAudience">Quem é o público principal?</label>
-                <textarea id="targetAudience" name="targetAudience" placeholder="Descreva o perfil do cliente ideal"></textarea>
-              </div>
-              <div class="grid2">
-                <div class="field">
-                  <label for="ageRange">Faixa etária</label>
-                  <input type="text" id="ageRange" name="ageRange" placeholder="Ex: 18 a 35 anos" />
-                </div>
-                <div class="field">
-                  <label>Género</label>
-                  <div class="radio-grid">
-                    <label class="radio-item"><input type="radio" name="gender" value="Feminino" /><span class="mark"></span>Feminino</label>
-                    <label class="radio-item"><input type="radio" name="gender" value="Masculino" /><span class="mark"></span>Masculino</label>
-                    <label class="radio-item"><input type="radio" name="gender" value="Ambos" /><span class="mark"></span>Ambos</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    if(field.type === 'checkbox' || field.type === 'radio'){
 
-          <div class="field">
-            <label>Estilo da marca</label>
-            <div class="check-grid">
-              <label class="check-item"><input type="checkbox" name="brandStyle" value="Luxo" /><span class="mark"></span>Luxo</label>
-              <label class="check-item"><input type="checkbox" name="brandStyle" value="Minimalista" /><span class="mark"></span>Minimalista</label>
-              <label class="check-item"><input type="checkbox" name="brandStyle" value="Fitness Hardcore" /><span class="mark"></span>Fitness Hardcore</label>
-              <label class="check-item"><input type="checkbox" name="brandStyle" value="Lifestyle" /><span class="mark"></span>Lifestyle</label>
-              <label class="check-item"><input type="checkbox" name="brandStyle" value="Streetwear" /><span class="mark"></span>Streetwear</label>
-              <label class="check-item"><input type="checkbox" name="brandStyle" value="Premium" /><span class="mark"></span>Premium</label>
-              <label class="check-item"><input type="checkbox" name="brandStyle" value="Fashion" /><span class="mark"></span>Fashion</label>
-            </div>
-          </div>
+      localStorage.setItem(
+        field.name + field.value,
+        field.checked
+      );
 
-          <div class="grid2">
-            <div class="field">
-              <label for="inspirationBrands">Marcas de inspiração</label>
-              <textarea id="inspirationBrands" name="inspirationBrands" placeholder="Marcas nacionais e internacionais"></textarea>
-            </div>
-            <div class="field">
-              <label for="referenceLinks">Links de referências</label>
-              <textarea id="referenceLinks" name="referenceLinks" placeholder="Instagram, sites, etc."></textarea>
-            </div>
-          </div>
-        </div>
-      </section>
+    } else {
 
-      <!-- ── 2. LOGÍSTICA ── -->
-      <section class="form-section" id="sec-1">
-        <div class="section-head">
-          <div class="section-num">02</div>
-          <div class="section-title">Logística e Operação</div>
-        </div>
-        <div class="field-group">
-          <div class="grid2">
-            <div class="field">
-              <label for="originZip">CEP de origem</label>
-              <input type="text" id="originZip" name="originZip" placeholder="00000-000" />
-            </div>
-            <div class="field">
-              <label for="logisticCenters">Centros logísticos</label>
-              <input type="text" id="logisticCenters" name="logisticCenters" placeholder="Quantos existirão?" />
-            </div>
-          </div>
-          <div class="field">
-            <label for="fullAddress">Endereço completo da expedição</label>
-            <textarea id="fullAddress" name="fullAddress" placeholder="Rua, Número, Bairro, Cidade, Estado"></textarea>
-          </div>
+      localStorage.setItem(field.name, field.value);
 
-          <div class="card-box">
-            <div class="field">
-              <label>Parceiro logístico principal</label>
-              <div class="check-grid">
-                <label class="check-item"><input type="checkbox" name="logisticPartner" value="Correios" /><span class="mark"></span>Correios</label>
-                <label class="check-item"><input type="checkbox" name="logisticPartner" value="Jadlog" /><span class="mark"></span>Jadlog</label>
-                <label class="check-item"><input type="checkbox" name="logisticPartner" value="Loggi" /><span class="mark"></span>Loggi</label>
-                <label class="check-item"><input type="checkbox" name="logisticPartner" value="Kangu" /><span class="mark"></span>Kangu</label>
-                <label class="check-item"><input type="checkbox" name="logisticPartner" value="Melhor Envio" /><span class="mark"></span>Melhor Envio</label>
-                <label class="check-item" id="outro-lbl"><input type="checkbox" name="logisticPartner" value="Outro" id="outro-check" /><span class="mark"></span>Outro</label>
-              </div>
-            </div>
-            <div class="conditional" id="outro-field">
-              <div class="field" style="margin-top:16px">
-                <label for="otherLogisticPartner">Qual outro parceiro?</label>
-                <input type="text" id="otherLogisticPartner" name="otherLogisticPartner" />
-              </div>
-            </div>
-          </div>
+    }
 
-          <div class="grid2">
-            <div class="field">
-              <label>Contrato corporativo?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="hasCorporateContract" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="hasCorporateContract" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-            <div class="field">
-              <label>Possui APIs de integração?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="hasApis" value="Sim" id="hasApis-sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="hasApis" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-          </div>
+  });
 
-          <div class="conditional" id="api-fields">
-            <div class="card-box">
-              <div class="grid2">
-                <div class="field">
-                  <label for="apiLogin">API Login</label>
-                  <input type="text" id="apiLogin" name="apiLogin" />
-                </div>
-                <div class="field">
-                  <label for="apiToken">API Token</label>
-                  <input type="password" id="apiToken" name="apiToken" />
-                </div>
-                <div class="field">
-                  <label for="apiKey">API Key</label>
-                  <input type="text" id="apiKey" name="apiKey" />
-                </div>
-                <div class="field">
-                  <label for="apiUrl">URL do painel</label>
-                  <input type="url" id="apiUrl" name="apiUrl" placeholder="https://" />
-                </div>
-              </div>
-            </div>
-          </div>
+  if(field.type === 'checkbox' || field.type === 'radio'){
 
-          <div class="grid2">
-            <div class="field">
-              <label>Produção própria?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="ownProduction" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="ownProduction" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-            <div class="field">
-              <label>Produção terceirizada?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="outsourcedProduction" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="outsourcedProduction" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-          </div>
-          <div class="grid2">
-            <div class="field">
-              <label for="productionTime">Tempo médio de produção</label>
-              <input type="text" id="productionTime" name="productionTime" placeholder="Ex: 7 dias úteis" />
-            </div>
-            <div class="field">
-              <label for="maxDailyQuantity">Quantidade máxima diária</label>
-              <input type="text" id="maxDailyQuantity" name="maxDailyQuantity" placeholder="Ex: 200 unidades" />
-            </div>
-          </div>
+    const checked =
+      localStorage.getItem(field.name + field.value);
 
-          <div class="field">
-            <label>Existirá frete grátis?</label>
-            <div class="radio-grid">
-              <label class="radio-item"><input type="radio" name="hasFreeShipping" value="Sim" id="freeShip-sim" /><span class="mark"></span>Sim</label>
-              <label class="radio-item"><input type="radio" name="hasFreeShipping" value="Não" /><span class="mark"></span>Não</label>
-            </div>
-          </div>
-          <div class="conditional" id="freeShipping-field">
-            <div class="field">
-              <label for="freeShippingRule">Regra do frete grátis</label>
-              <input type="text" id="freeShippingRule" name="freeShippingRule" placeholder="Ex: Acima de R$299" />
-            </div>
-          </div>
+    if(checked === 'true'){
+      field.checked = true;
+      field.closest('.check-item, .radio-item')
+      ?.classList.add('selected');
+    }
 
-          <div class="field">
-            <label>Margem de segurança nos prazos?</label>
-            <div class="radio-grid">
-              <label class="radio-item"><input type="radio" name="hasSafetyMargin" value="Sim" id="safetyMargin-sim" /><span class="mark"></span>Sim</label>
-              <label class="radio-item"><input type="radio" name="hasSafetyMargin" value="Não" /><span class="mark"></span>Não</label>
-            </div>
-          </div>
-          <div class="conditional" id="safetyMargin-field">
-            <div class="field">
-              <label for="safetyMarginDays">Quantos dias?</label>
-              <input type="text" id="safetyMarginDays" name="safetyMarginDays" placeholder="Ex: 2 dias" />
-            </div>
-          </div>
-        </div>
-      </section>
+  } else {
 
-      <!-- ── 3. PRODUTOS ── -->
-      <section class="form-section" id="sec-2">
-        <div class="section-head">
-          <div class="section-num">03</div>
-          <div class="section-title">Produtos</div>
-        </div>
-        <div class="field-group">
-          <div class="field">
-            <label for="initialProductCount">Quantos produtos serão lançados inicialmente?</label>
-            <input type="text" id="initialProductCount" name="initialProductCount" placeholder="Ex: 12 produtos" />
-          </div>
+    const saved = localStorage.getItem(field.name);
 
-          <div class="field">
-            <label>Categorias</label>
-            <div class="check-grid">
-              <label class="check-item"><input type="checkbox" name="categories" value="Calções" /><span class="mark"></span>Calções</label>
-              <label class="check-item"><input type="checkbox" name="categories" value="Tops" /><span class="mark"></span>Tops</label>
-              <label class="check-item"><input type="checkbox" name="categories" value="Leggings" /><span class="mark"></span>Leggings</label>
-              <label class="check-item"><input type="checkbox" name="categories" value="T-shirts" /><span class="mark"></span>T-shirts</label>
-              <label class="check-item"><input type="checkbox" name="categories" value="Oversized" /><span class="mark"></span>Oversized</label>
-              <label class="check-item"><input type="checkbox" name="categories" value="Acessórios" /><span class="mark"></span>Acessórios</label>
-              <label class="check-item"><input type="checkbox" name="categories" value="Suplementos" /><span class="mark"></span>Suplementos</label>
-            </div>
-          </div>
+    if(saved){
+      field.value = saved;
+    }
 
-          <div class="field">
-            <label>Tamanhos</label>
-            <div class="check-grid">
-              <label class="check-item"><input type="checkbox" name="sizes" value="XS" /><span class="mark"></span>XS</label>
-              <label class="check-item"><input type="checkbox" name="sizes" value="S" /><span class="mark"></span>S</label>
-              <label class="check-item"><input type="checkbox" name="sizes" value="M" /><span class="mark"></span>M</label>
-              <label class="check-item"><input type="checkbox" name="sizes" value="L" /><span class="mark"></span>L</label>
-              <label class="check-item"><input type="checkbox" name="sizes" value="XL" /><span class="mark"></span>XL</label>
-              <label class="check-item"><input type="checkbox" name="sizes" value="XXL" /><span class="mark"></span>XXL</label>
-            </div>
-          </div>
+  }
 
-          <div class="grid2">
-            <div class="field">
-              <label for="colors">Cores disponíveis</label>
-              <input type="text" id="colors" name="colors" placeholder="Ex: Preto, Branco, Verde militar" />
-            </div>
-            <div class="field">
-              <label for="initialQuantityPerVariant">Quantidade inicial por variante</label>
-              <input type="text" id="initialQuantityPerVariant" name="initialQuantityPerVariant" placeholder="Ex: 50 unidades" />
-            </div>
-          </div>
+});
+</script>
 
-          <div class="grid2">
-            <div class="field">
-              <label for="averagePrice">Preço médio dos produtos</label>
-              <input type="text" id="averagePrice" name="averagePrice" placeholder="Ex: R$ 189,00" />
-            </div>
-            <div class="field">
-              <label>Produto premium?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="isPremium" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="isPremium" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-          </div>
+<!-- REAL PROGRESS -->
+<script>
+function updateRealProgress(){
 
-          <div class="grid2">
-            <div class="field">
-              <label>Haverá promoções?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="hasPromotions" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="hasPromotions" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-          </div>
+  const fields =
+  document.querySelectorAll(
+    'input, textarea, select'
+  );
 
-          <div class="grid2">
-            <div class="field">
-              <label for="averageWeight">Peso médio</label>
-              <input type="text" id="averageWeight" name="averageWeight" placeholder="Ex: 400g" />
-            </div>
-            <div class="field">
-              <label for="dimensions">Dimensões</label>
-              <input type="text" id="dimensions" name="dimensions" placeholder="Ex: 30x20x5 cm" />
-            </div>
-          </div>
-        </div>
-      </section>
+  let filled = 0;
 
-      <!-- ── 4. WEBSITE ── -->
-      <section class="form-section" id="sec-3">
-        <div class="section-head">
-          <div class="section-num">04</div>
-          <div class="section-title">Website e Experiência</div>
-        </div>
-        <div class="field-group">
-          <div class="field">
-            <label>Estilo do site</label>
-            <div class="check-grid">
-              <label class="check-item"><input type="checkbox" name="siteStyle" value="Minimalista" /><span class="mark"></span>Minimalista</label>
-              <label class="check-item"><input type="checkbox" name="siteStyle" value="Cinematográfico" /><span class="mark"></span>Cinematográfico</label>
-              <label class="check-item"><input type="checkbox" name="siteStyle" value="Futurista" /><span class="mark"></span>Futurista</label>
-              <label class="check-item"><input type="checkbox" name="siteStyle" value="Luxury" /><span class="mark"></span>Luxury</label>
-              <label class="check-item"><input type="checkbox" name="siteStyle" value="Apple Style" /><span class="mark"></span>Apple Style</label>
-            </div>
-          </div>
+  fields.forEach(f => {
 
-          <div class="field">
-            <label>Funcionalidades desejadas</label>
-            <div class="check-grid">
-              <label class="check-item"><input type="checkbox" name="features" value="Dark Mode" /><span class="mark"></span>Dark Mode</label>
-              <label class="check-item"><input type="checkbox" name="features" value="IA integrada" /><span class="mark"></span>IA integrada</label>
-              <label class="check-item"><input type="checkbox" name="features" value="Programa de afiliados" /><span class="mark"></span>Afiliados</label>
-              <label class="check-item"><input type="checkbox" name="features" value="Cashback" /><span class="mark"></span>Cashback</label>
-              <label class="check-item"><input type="checkbox" name="features" value="Comunidade" /><span class="mark"></span>Comunidade</label>
-              <label class="check-item"><input type="checkbox" name="features" value="Ranking de clientes" /><span class="mark"></span>Ranking</label>
-              <label class="check-item"><input type="checkbox" name="features" value="Área VIP" /><span class="mark"></span>Área VIP</label>
-              <label class="check-item"><input type="checkbox" name="features" value="App mobile" /><span class="mark"></span>App mobile</label>
-              <label class="check-item"><input type="checkbox" name="features" value="Dashboard admin" /><span class="mark"></span>Dashboard admin</label>
-            </div>
-          </div>
+    if(
+      f.type === 'checkbox' ||
+      f.type === 'radio'
+    ){
 
-          <div class="grid2">
-            <div class="field">
-              <label>Vídeos profissionais?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="hasProfessionalVideos" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="hasProfessionalVideos" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-            <div class="field">
-              <label>Precisa de copywriting?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="needsCopywriting" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="needsCopywriting" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      if(f.checked) filled++;
 
-      <!-- ── 5. PAGAMENTOS ── -->
-      <section class="form-section" id="sec-4">
-        <div class="section-head">
-          <div class="section-num">05</div>
-          <div class="section-title">Pagamentos</div>
-        </div>
-        <div class="field-group">
-          <div class="field">
-            <label>Métodos de pagamento</label>
-            <div class="check-grid">
-              <label class="check-item"><input type="checkbox" name="paymentMethods" value="Pix" /><span class="mark"></span>Pix</label>
-              <label class="check-item"><input type="checkbox" name="paymentMethods" value="Cartão" /><span class="mark"></span>Cartão</label>
-              <label class="check-item"><input type="checkbox" name="paymentMethods" value="Boleto" /><span class="mark"></span>Boleto</label>
-              <label class="check-item"><input type="checkbox" name="paymentMethods" value="Apple Pay" /><span class="mark"></span>Apple Pay</label>
-              <label class="check-item"><input type="checkbox" name="paymentMethods" value="Google Pay" /><span class="mark"></span>Google Pay</label>
-            </div>
-          </div>
-          <div class="grid2">
-            <div class="field">
-              <label for="pixTimeLimit">Tempo limite do Pix</label>
-              <input type="text" id="pixTimeLimit" name="pixTimeLimit" placeholder="Ex: 30 minutos" />
-            </div>
-            <div class="field">
-              <label>Venda para</label>
-              <div class="check-grid">
-                <label class="check-item"><input type="checkbox" name="sellTo" value="CPF" /><span class="mark"></span>CPF</label>
-                <label class="check-item"><input type="checkbox" name="sellTo" value="CNPJ" /><span class="mark"></span>CNPJ</label>
-                <label class="check-item"><input type="checkbox" name="sellTo" value="Ambos" /><span class="mark"></span>Ambos</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    } else {
 
-      <!-- ── 6. ADMINISTRAÇÃO ── -->
-      <section class="form-section" id="sec-5">
-        <div class="section-head">
-          <div class="section-num">06</div>
-          <div class="section-title">Administração</div>
-        </div>
-        <div class="field-group">
-          <div class="field">
-            <label for="teamSize">Quantas pessoas terão acesso?</label>
-            <input type="text" id="teamSize" name="teamSize" placeholder="Ex: 4 pessoas" />
-          </div>
-          <div class="field">
-            <label>Permissões disponíveis</label>
-            <div class="check-grid">
-              <label class="check-item"><input type="checkbox" name="permissions" value="Alterar preços" /><span class="mark"></span>Alterar preços</label>
-              <label class="check-item"><input type="checkbox" name="permissions" value="Ver faturamento" /><span class="mark"></span>Ver faturamento</label>
-              <label class="check-item"><input type="checkbox" name="permissions" value="Gerir pedidos" /><span class="mark"></span>Gerir pedidos</label>
-              <label class="check-item"><input type="checkbox" name="permissions" value="Editar stock" /><span class="mark"></span>Editar stock</label>
-              <label class="check-item"><input type="checkbox" name="permissions" value="Criar campanhas" /><span class="mark"></span>Criar campanhas</label>
-            </div>
-          </div>
-        </div>
-      </section>
+      if(f.value.trim() !== ''){
+        filled++;
+      }
 
-      <!-- ── 7. MARKETING ── -->
-      <section class="form-section" id="sec-6">
-        <div class="section-head">
-          <div class="section-num">07</div>
-          <div class="section-title">Marketing</div>
-        </div>
-        <div class="field-group">
-          <div class="grid2">
-            <div class="field">
-              <label>Influenciadores?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="hasInfluencers" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="hasInfluencers" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-            <div class="field">
-              <label>Programa de afiliados?</label>
-              <div class="radio-grid">
-                <label class="radio-item"><input type="radio" name="hasAffiliates" value="Sim" /><span class="mark"></span>Sim</label>
-                <label class="radio-item"><input type="radio" name="hasAffiliates" value="Não" /><span class="mark"></span>Não</label>
-              </div>
-            </div>
-          </div>
-          <div class="field">
-            <label>Comunidade fechada?</label>
-            <div class="radio-grid">
-              <label class="radio-item"><input type="radio" name="hasClosedCommunity" value="Sim" /><span class="mark"></span>Sim</label>
-              <label class="radio-item"><input type="radio" name="hasClosedCommunity" value="Não" /><span class="mark"></span>Não</label>
-            </div>
-          </div>
-          <div class="grid2">
-            <div class="field">
-              <label for="instagram">Instagram</label>
-              <input type="text" id="instagram" name="instagram" placeholder="@thymos.official" />
-            </div>
-            <div class="field">
-              <label for="tiktok">TikTok</label>
-              <input type="text" id="tiktok" name="tiktok" placeholder="@thymos.oficial" />
-            </div>
-            <div class="field">
-              <label for="pinterest">Pinterest</label>
-              <input type="text" id="pinterest" name="pinterest" placeholder="pinterest.com/thymos" />
-            </div>
-            <div class="field">
-              <label for="youtube">YouTube</label>
-              <input type="text" id="youtube" name="youtube" placeholder="youtube.com/@thymos" />
-            </div>
-          </div>
-        </div>
-      </section>
+    }
 
-      <!-- ── 8. DOCUMENTOS ── -->
-      <section class="form-section" id="sec-7">
-        <div class="section-head">
-          <div class="section-num">08</div>
-          <div class="section-title">Documentos e Uploads</div>
-        </div>
-        <div class="field-group">
-          <div class="field">
-            <label>Documentos a enviar</label>
-            <div class="check-grid">
-              <label class="check-item"><input type="checkbox" name="documentTypes" value="Logotipo" /><span class="mark"></span>Logotipo</label>
-              <label class="check-item"><input type="checkbox" name="documentTypes" value="Brandbook" /><span class="mark"></span>Brandbook</label>
-              <label class="check-item"><input type="checkbox" name="documentTypes" value="Fotos" /><span class="mark"></span>Fotos</label>
-              <label class="check-item"><input type="checkbox" name="documentTypes" value="Vídeos" /><span class="mark"></span>Vídeos</label>
-              <label class="check-item"><input type="checkbox" name="documentTypes" value="Contratos" /><span class="mark"></span>Contratos</label>
-              <label class="check-item"><input type="checkbox" name="documentTypes" value="Tabela Excel" /><span class="mark"></span>Tabela Excel</label>
-              <label class="check-item"><input type="checkbox" name="documentTypes" value="Dados bancários" /><span class="mark"></span>Dados bancários</label>
-              <label class="check-item"><input type="checkbox" name="documentTypes" value="Referências visuais" /><span class="mark"></span>Referências</label>
-            </div>
-          </div>
+  });
 
-          <div class="field">
-            <label>Ficheiros</label>
-            <div id="drop-zone">
-              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" color="#c9a84c"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.338-2.324 4.5 4.5 0 0 1 4.073 4.35A4.5 4.5 0 0 1 17.25 19.5H6.75Z"/></svg>
-              <p>Arraste e solte os ficheiros aqui</p>
-              <small>Imagens, PDFs, Excel, Word, vídeos — até 50MB por ficheiro</small>
-              <input type="file" id="file-input" multiple style="display:none" />
-            </div>
-            <div id="file-list"></div>
-          </div>
-        </div>
-      </section>
+  const progress =
+  (filled / fields.length) * 100;
 
-      <!-- ── 9. FINAL ── -->
-      <section class="form-section" id="sec-8">
-        <div class="section-head">
-          <div class="section-num">09</div>
-          <div class="section-title">Informações Finais</div>
-        </div>
-        <div class="field-group">
-          <div class="field">
-            <label for="objective12months">Qual é o objetivo da marca nos próximos 12 meses?</label>
-            <textarea id="objective12months" name="objective12months" style="min-height:130px" placeholder="Descreva as metas de crescimento, expansão, lançamentos..."></textarea>
-          </div>
-          <div class="field">
-            <label for="targetRevenue">Qual faturamento pretendem atingir?</label>
-            <input type="text" id="targetRevenue" name="targetRevenue" placeholder="Ex: R$ 500.000,00 / ano" />
-          </div>
-          <div class="field">
-            <label for="specialFeatures">Existe alguma funcionalidade especial desejada?</label>
-            <textarea id="specialFeatures" name="specialFeatures" style="min-height:130px" placeholder="Descreva qualquer funcionalidade, integração ou ideia que ainda não foi mencionada..."></textarea>
-          </div>
-        </div>
-      </section>
+  document.getElementById(
+    'progress-fill'
+  ).style.width = progress + '%';
 
-      <div id="error-msg"></div>
-      <button type="submit" id="submit-btn">Enviar Formulário</button>
+}
 
-    </form>
-  </main>
+document.querySelectorAll(
+  'input, textarea, select'
+).forEach(el => {
+
+  el.addEventListener(
+    'input',
+    updateRealProgress
+  );
+
+  el.addEventListener(
+    'change',
+    updateRealProgress
+  );
+
+});
+
+updateRealProgress();
+</script>
+
+<!-- FILE LIMIT -->
+<script>
+function addFiles(files){
+
+  const file = files[0];
+
+  if(!file) return;
+
+  if(file.size > 10 * 1024 * 1024){
+
+    alert('Máximo permitido: 10MB');
+
+    return;
+
+  }
+
+  uploadedFiles = [file];
+
+  renderFiles();
+
+}
+</script>
+
+<!-- SCROLL REVEAL -->
+<script>
+const reveals =
+document.querySelectorAll('.form-section');
+
+const observer =
+new IntersectionObserver(entries=>{
+
+  entries.forEach(entry=>{
+
+    if(entry.isIntersecting){
+
+      entry.target.classList.add('show');
+
+    }
+
+  });
+
+},{
+  threshold:0.15
+});
+
+reveals.forEach(r=>{
+
+  r.classList.add('reveal');
+
+  observer.observe(r);
+
+});
+</script>
+
+<!-- LOADER SCRIPT -->
+<script>
+window.addEventListener('load', ()=>{
+
+  setTimeout(()=>{
+
+    const loader =
+    document.getElementById('loader');
+
+    loader.style.opacity='0';
+
+    setTimeout(()=>{
+
+      loader.remove();
+
+    },600);
+
+  },1000);
+
+});
+</script>
+
+<!-- CLEAR FORM AFTER SUCCESS -->
+<script>
+function clearLocalStorageForm(){
+
+  document.querySelectorAll(
+    'input, textarea, select'
+  ).forEach(field=>{
+
+    if(field.name){
+
+      localStorage.removeItem(field.name);
+      localStorage.removeItem(
+        field.name + field.value
+      );
+
+    }
+
+  });
+
+}
+</script>
+
+<!-- SUBMIT PREMIUM -->
+<script>
+const form =
+document.getElementById('main-form');
+
+form.addEventListener(
+'submit',
+function(e){
+
+e.preventDefault();
+
+const brandName =
+document.getElementById(
+'brandName'
+).value.trim();
+
+if(!brandName){
+
+document.getElementById(
+'brandName'
+).focus();
+
+return;
+
+}
+
+const btn =
+document.getElementById(
+'submit-btn'
+);
+
+const err =
+document.getElementById(
+'error-msg'
+);
+
+btn.disabled = true;
+
+btn.innerHTML =
+'<span class="spinner"></span>A enviar...';
+
+err.style.display = 'none';
+
+const formData =
+new FormData(form);
+
+if(uploadedFiles.length > 0){
+
+formData.append(
+'attachment',
+uploadedFiles[0]
+);
+
+}
+
+fetch(
+'https://api.web3forms.com/submit',
+{
+method:'POST',
+body:formData
+}
+)
+
+.then(async(response)=>{
+
+let json =
+await response.json();
+
+if(response.status == 200){
+
+clearLocalStorageForm();
+
+document.getElementById(
+'form-page'
+).style.display='none';
+
+document.getElementById(
+'success-screen'
+).classList.add('show');
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+}else{
+
+err.textContent =
+json.message ||
+'Ocorreu um erro ao enviar.';
+
+err.style.display='block';
+
+btn.disabled=false;
+
+btn.textContent =
+'Enviar Formulário';
+
+}
+
+})
+
+.catch((error)=>{
+
+console.log(error);
+
+err.textContent =
+'Erro de rede.';
+
+err.style.display='block';
+
+btn.disabled=false;
+
+btn.textContent =
+'Enviar Formulário';
+
+});
+
+});
+</script>
+
+<!-- PREMIUM CSS -->
+<style>
+
+/* CINEMATIC BG */
+body{
+
+background:
+radial-gradient(
+circle at top right,
+rgba(201,168,76,.08),
+transparent 30%
+),
+#080808;
+
+}
+
+/* GRAIN EFFECT */
+body::after{
+
+content:'';
+
+position:fixed;
+
+inset:0;
+
+background-image:
+url('https://grainy-gradients.vercel.app/noise.svg');
+
+opacity:.03;
+
+pointer-events:none;
+
+z-index:9999;
+
+}
+
+/* HERO GLOW */
+.hero{
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+
+content:'';
+
+position:absolute;
+
+width:400px;
+height:400px;
+
+background:
+rgba(201,168,76,.06);
+
+filter:blur(120px);
+
+top:-120px;
+right:-100px;
+
+z-index:-1;
+
+}
+
+/* INPUTS */
+input:hover,
+textarea:hover,
+select:hover{
+
+border-color:#3a3a3a;
+
+}
+
+/* FILE HOVER */
+.file-thumb img{
+
+transition:
+transform .3s ease;
+
+}
+
+.file-item:hover img{
+
+transform:scale(1.08);
+
+}
+
+/* BUTTON */
+#submit-btn{
+
+transition:
+transform .25s ease,
+box-shadow .25s ease,
+background .25s ease;
+
+position:sticky;
+
+bottom:20px;
+
+z-index:50;
+
+}
+
+#submit-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 12px 40px
+rgba(201,168,76,.25);
+
+}
+
+/* REVEAL */
+.reveal{
+
+opacity:0;
+
+transform:translateY(40px);
+
+transition:
+1s cubic-bezier(.2,.8,.2,1);
+
+}
+
+.reveal.show{
+
+opacity:1;
+
+transform:none;
+
+}
+
+/* LOADER */
+#loader{
+
+position:fixed;
+
+inset:0;
+
+background:#080808;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+z-index:999999;
+
+transition:.6s;
+
+}
+
+.loader-logo{
+
+color:#c9a84c;
+
+font-size:42px;
+
+letter-spacing:8px;
+
+font-family:'Playfair Display';
+
+animation:
+pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{
+opacity:.4;
+transform:scale(.98);
+}
+
+50%{
+opacity:1;
+transform:scale(1);
+}
+
+100%{
+opacity:.4;
+transform:scale(.98);
+}
+
+}
+
+/* PREMIUM CARD */
+.card-box{
+
+backdrop-filter:blur(18px);
+
+background:
+rgba(255,255,255,.025);
+
+box-shadow:
+0 0 0 1px rgba(255,255,255,.02),
+0 10px 40px rgba(0,0,0,.3);
+
+}
+
+/* NAV PREMIUM */
+#nav{
+
+backdrop-filter:
+blur(24px);
+
+background:
+rgba(8,8,8,.78);
+
+}
+
+/* PILLS */
+.pill{
+
+transition:
+all .25s ease;
+
+}
+
+.pill:hover{
+
+transform:translateY(-1px);
+
+}
+
+/* RADIO / CHECK */
+.check-item,
+.radio-item{
+
+transition:
+all .2s ease;
+
+}
+
+.check-item:hover,
+.radio-item:hover{
+
+transform:translateY(-1px);
+
+}
+
+/* SUCCESS */
+#success-screen{
+
+background:
+radial-gradient(
+circle,
+rgba(201,168,76,.08),
+transparent 50%
+),
+#080808;
+
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.hero h1{
+
+font-size:42px;
+
+}
+
+.section-title{
+
+font-size:24px;
+
+}
+
+main{
+
+padding:
+90px 18px 120px;
+
+}
+
+#nav-inner{
+
+padding:0 14px;
+
+}
+
+.pill{
+
+font-size:11px;
+
+padding:5px 10px;
+
+}
+
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{
+
+width:6px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#2b2b2b;
+
+border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#c9a84c;
+
+}
+
+</style>
+
+<!-- PRIORIDADE -->
+<div class="field">
+
+<label>
+Urgência do projeto
+</label>
+
+<div class="radio-grid">
+
+<label class="radio-item">
+
+<input
+type="radio"
+name="priority"
+value="Baixa"
+/>
+
+<span class="mark"></span>
+
+Baixa
+
+</label>
+
+<label class="radio-item">
+
+<input
+type="radio"
+name="priority"
+value="Média"
+/>
+
+<span class="mark"></span>
+
+Média
+
+</label>
+
+<label class="radio-item">
+
+<input
+type="radio"
+name="priority"
+value="Alta"
+/>
+
+<span class="mark"></span>
+
+Alta
+
+</label>
+
 </div>
 
-<!-- SUCCESS -->
-<div id="success-screen">
-  <div class="success-icon">
-    <svg width="36" height="36" fill="none" stroke="#c9a84c" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-  </div>
-  <h2>Submissão Concluída</h2>
-  <p>Recebemos o seu briefing estratégico. A nossa equipa entrará em contacto em breve para os próximos passos.</p>
-  <button class="btn-ghost" onclick="location.reload()">Voltar ao Início</button>
 </div>
+
+<!-- HIDDEN EMAIL CONFIG -->
+<input
+type="hidden"
+name="from_name"
+value="THYMOS Strategic Form"
+/>
+
+<input
+type="hidden"
+name="subject"
+value="🔥 Novo Briefing Estratégico THYMOS"
+/>
+
+<!-- TRACKING -->
+<!-- Google Analytics -->
+<script async
+src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID">
+</script>
 
 <script>
-  // ── FILES ──────────────────────────────────────────────────────
-  let uploadedFiles = [];
+window.dataLayer =
+window.dataLayer || [];
 
-  const dropZone = document.getElementById('drop-zone');
-  const fileInput = document.getElementById('file-input');
-  const fileList  = document.getElementById('file-list');
+function gtag(){
+dataLayer.push(arguments);
+}
 
-  dropZone.addEventListener('click', () => fileInput.click());
-  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault(); dropZone.classList.remove('drag-over');
-    addFiles(Array.from(e.dataTransfer.files));
-  });
-  fileInput.addEventListener('change', () => addFiles(Array.from(fileInput.files)));
+gtag('js', new Date());
 
-  function addFiles(files) {
-    uploadedFiles = [...uploadedFiles, ...files];
-    renderFiles();
-  }
-
-  function removeFile(i) {
-    uploadedFiles.splice(i, 1);
-    renderFiles();
-  }
-
-  function renderFiles() {
-    fileList.innerHTML = '';
-    uploadedFiles.forEach((f, i) => {
-      const isImg = f.type.startsWith('image/');
-      const item = document.createElement('div');
-      item.className = 'file-item';
-      item.innerHTML = `
-        <div class="file-thumb">
-          ${isImg ? `<img src="${URL.createObjectURL(f)}" alt="" />` : `<svg width="18" height="18" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>`}
-        </div>
-        <div class="file-info">
-          <div class="file-name">${f.name}</div>
-          <div class="file-size">${(f.size/1024/1024).toFixed(2)} MB</div>
-        </div>
-        <button type="button" class="file-remove" onclick="removeFile(${i})">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
-        </button>`;
-      fileList.appendChild(item);
-    });
-  }
-
-  // ── CONDITIONALS ──────────────────────────────────────────────
-  function toggleConditional(triggerName, value, targetId) {
-    const radios = document.querySelectorAll(`input[name="${triggerName}"]`);
-    radios.forEach(r => r.addEventListener('change', () => {
-      const el = document.getElementById(targetId);
-      el.classList.toggle('open', r.value === value && r.checked);
-    }));
-  }
-
-  toggleConditional('hasApis', 'Sim', 'api-fields');
-  toggleConditional('hasFreeShipping', 'Sim', 'freeShipping-field');
-  toggleConditional('hasSafetyMargin', 'Sim', 'safetyMargin-field');
-
-  document.getElementById('outro-check').addEventListener('change', function() {
-    document.getElementById('outro-field').classList.toggle('open', this.checked);
-  });
-
-  // ── CHECKBOX / RADIO STYLING ──────────────────────────────────
-  document.querySelectorAll('.check-item, .radio-item').forEach(item => {
-    const input = item.querySelector('input');
-    input.addEventListener('change', () => {
-      if (input.type === 'radio') {
-        document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => {
-          r.closest('.radio-item')?.classList.remove('selected');
-        });
-      }
-      item.classList.toggle('selected', input.checked);
-    });
-  });
-
-  // ── PROGRESS / NAV ────────────────────────────────────────────
-  const sections = document.querySelectorAll('.form-section');
-  const pills    = document.querySelectorAll('.pill');
-  const fill     = document.getElementById('progress-fill');
-
-  function scrollTo(i) {
-    document.getElementById(`sec-${i}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  window.scrollTo = (function(orig) {
-    return function(i) {
-      if (typeof i === 'number') scrollTo(i);
-      else orig.apply(window, arguments);
-    };
-  })(window.scrollTo);
-
-  window.addEventListener('scroll', () => {
-    let active = 0;
-    sections.forEach((s, i) => {
-      if (s.getBoundingClientRect().top <= window.innerHeight * 0.5) active = i;
-    });
-    pills.forEach((p, i) => p.classList.toggle('active', i === active));
-    fill.style.width = ((active + 1) / sections.length * 100) + '%';
-  });
-
-  // ── SUBMIT ────────────────────────────────────────────────────
-  document.getElementById('main-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const brandName = document.getElementById('brandName').value.trim();
-    if (!brandName) {
-      document.getElementById('brandName').focus();
-      return;
-    }
-
-    const btn = document.getElementById('submit-btn');
-    const err = document.getElementById('error-msg');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>A enviar...';
-    err.style.display = 'none';
-
-    try {
-      const fd = new FormData(this);
-      uploadedFiles.forEach(f => fd.append('files', f));
-
-      const res = await fetch('/api/form/submit', { method: 'POST', body: fd });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || 'Erro ao enviar. Tente novamente.');
-      }
-
-      document.getElementById('form-page').style.display = 'none';
-      document.getElementById('success-screen').classList.add('show');
-
-    } catch (ex) {
-      err.textContent = ex.message || 'Ocorreu um erro. Por favor, tente novamente.';
-      err.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'Enviar Formulário';
-      err.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  });
+gtag(
+'config',
+'GA_MEASUREMENT_ID'
+);
 </script>
-</body>
-</html>
+
+<!-- META PIXEL -->
+<script>
+!function(f,b,e,v,n,t,s)
+{
+if(f.fbq)return;
+n=f.fbq=function(){
+n.callMethod?
+n.callMethod.apply(n,arguments):
+n.queue.push(arguments)
+};
+
+if(!f._fbq)f._fbq=n;
+
+n.push=n;
+
+n.loaded=!0;
+
+n.version='2.0';
+
+n.queue=[];
+
+t=b.createElement(e);
+
+t.async=!0;
+
+t.src=v;
+
+s=b.getElementsByTagName(e)[0];
+
+s.parentNode.insertBefore(t,s)
+
+}
+
+(window,
+document,
+'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', 'PIXEL_ID');
+
+fbq('track', 'PageView');
+</script>
